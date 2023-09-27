@@ -85,11 +85,6 @@ export class UserGetSerialization extends ResponseIdSerialization {
   })
   readonly lastName: string
 
-  @ApiProperty({
-    required: true,
-    nullable: false,
-    example: faker.person.fullName(),
-  })
   @Expose()
   get fullName(): string {
     return `${this.firstName} ${this.lastName}`

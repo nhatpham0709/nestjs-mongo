@@ -54,6 +54,7 @@ import { UserService } from 'src/modules/user/services/user.service'
 import { UserRefreshSerialization } from 'src/modules/user/serializations/user.refresh.serialization'
 import { ConfigService } from '@nestjs/config'
 import { hashSync } from 'bcryptjs'
+import { plainToInstance } from 'class-transformer'
 
 @ApiTags('User/Auth')
 @Controller({
@@ -98,8 +99,13 @@ export class UserAuthController {
       })
     }
 
+    const serializedUser = plainToInstance(
+      UserProfileSerialization,
+      userWithRole.toObject(),
+    )
+    
     const accessToken: string =
-      await this.authService.createAccessToken(userWithRole)
+      await this.authService.createAccessToken(serializedUser)
 
     return {
       data: {

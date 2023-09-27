@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { hashSync } from 'bcryptjs'
 import { HelperDateService } from 'src/common/helper/services/helper.date.service'
 import { HelperStringService } from 'src/common/helper/services/helper.string.service'
+import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization'
 
 @Injectable()
 export class AuthService {
@@ -48,20 +49,28 @@ export class AuthService {
     )
   }
 
-  async createAccessToken(payload: any): Promise<string> {
-    return await this.jwtService.signAsync(payload, {
-      secret: this.accessTokenSecretKey,
-      expiresIn: this.accessTokenExpirationTime,
-      notBefore: this.accessTokenNotBeforeExpirationTime,
-    })
+  async createAccessToken(payload: UserProfileSerialization): Promise<string> {
+    return await this.jwtService.signAsync(
+      { data: payload },
+      {
+        secret: this.accessTokenSecretKey,
+        expiresIn: this.accessTokenExpirationTime,
+        notBefore: this.accessTokenNotBeforeExpirationTime,
+      },
+    )
   }
 
   async createRefreshToken(payload: any): Promise<string> {
-    return await this.jwtService.signAsync(payload, {
-      secret: this.refreshTokenSecretKey,
-      expiresIn: this.refreshTokenExpirationTime,
-      notBefore: this.refreshTokenNotBeforeExpirationTime,
-    })
+    return await this.jwtService.signAsync(
+      {
+        data: payload,
+      },
+      {
+        secret: this.refreshTokenSecretKey,
+        expiresIn: this.refreshTokenExpirationTime,
+        notBefore: this.refreshTokenNotBeforeExpirationTime,
+      },
+    )
   }
 
   async createPassword(password: string): Promise<any> {

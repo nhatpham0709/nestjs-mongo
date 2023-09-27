@@ -22,9 +22,6 @@ export default registerAs(
       ), // 1 hours
     },
 
-    subject: process.env.AUTH_JWT_SUBJECT,
-    audience: process.env.AUTH_JWT_AUDIENCE,
-    issuer: process.env.AUTH_JWT_ISSUER,
     prefixAuthorization: 'Bearer',
 
     password: {

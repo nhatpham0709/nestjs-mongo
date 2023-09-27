@@ -26,7 +26,6 @@ import { Response } from 'src/common/response/decorators/response.decorator'
 import { IResponse } from 'src/common/response/interfaces/response.interface'
 import { ENUM_ROLE_STATUS_CODE_ERROR } from 'src/modules/role/constants/role.status-code.constant'
 import { RoleService } from 'src/modules/role/services/role.service'
-import { SettingService } from 'src/common/setting/services/setting.service'
 import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant'
 import {
   ENUM_USER_STATUS_CODE_ERROR,
@@ -45,6 +44,8 @@ import { UserService } from 'src/modules/user/services/user.service'
 import { MailService } from 'src/common/mail/mail.service'
 import { ConfigService } from '@nestjs/config'
 import { compareSync } from 'bcryptjs'
+import { plainToInstance } from 'class-transformer'
+import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization'
 
 @ApiTags('Auth')
 @Controller({
@@ -57,7 +58,6 @@ export class AuthController {
     private readonly userService: UserService,
     private readonly authService: AuthService,
     private readonly roleService: RoleService,
-    private readonly settingService: SettingService,
     private readonly mailSerivce: MailService,
     private readonly configService: ConfigService,
   ) {}
@@ -123,11 +123,18 @@ export class AuthController {
 
     await this.userService.resetPasswordAttempt(user)
 
+    
+
+    const serializedUser = plainToInstance(
+      UserProfileSerialization,
+      userWithRole.toObject(),
+    )
+
     const accessToken: string =
-      await this.authService.createAccessToken(userWithRole)
+      await this.authService.createAccessToken(serializedUser)
 
     const refreshToken: string = await this.authService.createRefreshToken(
-      userWithRole._id,
+      serializedUser._id,
     )
 
     const checkPasswordExpired: boolean =
@@ -273,10 +280,15 @@ export class AuthController {
       refreshToken: googleRefreshToken,
     })
 
-    const accessToken = await this.authService.createAccessToken(userWithRole)
+    
+    const serializedUser = plainToInstance(
+      UserProfileSerialization,
+      userWithRole.toObject(),
+    )
+    const accessToken = await this.authService.createAccessToken(serializedUser)
 
     const refreshToken = await this.authService.createRefreshToken(
-      userWithRole._id,
+      serializedUser._id,
     )
 
     return {
@@ -371,5 +383,4 @@ export class AuthController {
 
     return
   }
-  
 }

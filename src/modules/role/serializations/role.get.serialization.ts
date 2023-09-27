@@ -1,14 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Exclude, Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import {
     ENUM_POLICY_ACTION,
     ENUM_POLICY_SUBJECT,
 } from 'src/common/policy/constants/policy.enum.constant';
 import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
 import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
+import { UserGetSerialization } from 'src/modules/user/serializations/user.get.serialization';
 
-export class RoleGetPermissionSerialization {
+export class PermissionSerialization {
     @ApiProperty({
         required: true,
         nullable: false,
@@ -62,13 +63,23 @@ export class RoleGetSerialization extends ResponseIdSerialization {
     readonly type: ENUM_ROLE_TYPE;
 
     @ApiProperty({
-        type: () => RoleGetPermissionSerialization,
+        type: () => PermissionSerialization,
         required: true,
         nullable: false,
         default: [],
     })
-    @Type(() => RoleGetPermissionSerialization)
-    readonly permissions: RoleGetPermissionSerialization;
+    @Type(() => PermissionSerialization)
+    readonly permissions: PermissionSerialization;
+
+    @Expose()
+    @ApiProperty({
+        type: () => UserGetSerialization,
+        required: true,
+        nullable: false,
+        default: [],
+    })
+    @Type(() => UserGetSerialization)
+    readonly users: UserGetSerialization;    
 
     @ApiProperty({
         description: 'Date created at',
@@ -89,4 +100,6 @@ export class RoleGetSerialization extends ResponseIdSerialization {
     @ApiHideProperty()
     @Exclude()
     readonly deletedAt?: Date;
+
+
 }

@@ -65,7 +65,7 @@ export class UserEntity extends DatabaseMongoUUIDEntityAbstract {
 
   @Prop({
     required: true,
-    ref: RoleEntity.name,
+    ref: 'RoleEntity',
     index: true,
   })
   role: string

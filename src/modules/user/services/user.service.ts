@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { IUserService } from 'src/modules/user/interfaces/user.service.interface'
 import {
   IDatabaseCreateOptions,
   IDatabaseExistOptions,
@@ -26,14 +25,12 @@ import {
   IUserDoc,
   IUserEntity,
 } from 'src/modules/user/interfaces/user.interface'
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization'
-import { plainToInstance } from 'class-transformer'
 import { UserImportDto } from 'src/modules/user/dtos/user.import.dto'
 import { UserUpdateUsernameDto } from 'src/modules/user/dtos/user.update-username.dto'
 import { UserUpdateGoogleSSODto } from 'src/modules/user/dtos/user.update-google-sso.dto'
 
 @Injectable()
-export class UserService implements IUserService {
+export class UserService {
   private readonly uploadPath: string
   private readonly authMaxPasswordAttempt: number
 
@@ -330,12 +327,6 @@ export class UserService implements IUserService {
       path: this.uploadPath,
       filename: filename,
     }
-  }
-
-  async payloadSerialization(
-    data: IUserDoc,
-  ): Promise<UserPayloadSerialization> {
-    return plainToInstance(UserPayloadSerialization, data.toObject())
   }
 
   async import(

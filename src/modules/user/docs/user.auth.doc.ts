@@ -7,7 +7,6 @@ import {
     DocRequestFile,
     DocResponse,
 } from 'src/common/doc/decorators/doc.decorator';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
 import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization';
 import { UserRefreshSerialization } from 'src/modules/user/serializations/user.refresh.serialization';
 
@@ -73,8 +72,8 @@ export function UserAuthInfoDoc(): MethodDecorator {
         DocAuth({
             jwtAccessToken: true,
         }),
-        DocResponse<UserPayloadSerialization>('user.info', {
-            serialization: UserPayloadSerialization,
+        DocResponse<UserProfileSerialization>('user.info', {
+            serialization: UserProfileSerialization,
         })
     );
 }

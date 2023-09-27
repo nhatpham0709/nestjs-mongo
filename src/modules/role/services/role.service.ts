@@ -27,7 +27,6 @@ export class RoleService implements IRoleService {
     find?: Record<string, any>,
     options?: IDatabaseFindAllOptions,
   ): Promise<RoleEntity[]> {
-    
     return this.roleRepository.findAll(find, {
       ...options,
 

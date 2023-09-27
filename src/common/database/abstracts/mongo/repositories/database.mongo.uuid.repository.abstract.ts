@@ -80,7 +80,7 @@ export abstract class DatabaseMongoUUIDRepositoryAbstract<
 
     if (options?.session) {
       findAll.session(options.session)
-    }
+    }    
 
     return findAll.lean() as any
   }

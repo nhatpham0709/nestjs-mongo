@@ -3,13 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UserLoginSerialization {
     @ApiProperty({
-        example: 'Bearer',
-        required: true,
-        nullable: false,
-    })
-    readonly tokenType: string;
-
-    @ApiProperty({
         example: 1660190937231,
         description: 'Expire in timestamp',
         required: true,

@@ -11,7 +11,7 @@ import {
     PolicyHandler,
 } from 'src/common/policy/interfaces/policy.interface';
 import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { UserPayloadPermissionSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+import { UserPermissionSerialization } from 'src/modules/user/serializations/user.profile.serialization';
 
 @Injectable()
 export class PolicyAbilityFactory {
@@ -40,7 +40,7 @@ export class PolicyAbilityFactory {
     mappingAbility({
         subject,
         action,
-    }: UserPayloadPermissionSerialization): IPolicyRuleAbility[] {
+    }: UserPermissionSerialization): IPolicyRuleAbility[] {
         return action
             .split(',')
             .map((val: string) => ({

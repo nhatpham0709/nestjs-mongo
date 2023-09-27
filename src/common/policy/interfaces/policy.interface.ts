@@ -4,7 +4,7 @@ import {
     ENUM_POLICY_SUBJECT,
 } from 'src/common/policy/constants/policy.enum.constant';
 import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
-import { UserPayloadPermissionSerialization } from 'src/modules/user/serializations/user.payload.serialization';
+import { UserPermissionSerialization } from 'src/modules/user/serializations/user.profile.serialization';
 
 export interface IPolicyRule {
     subject: ENUM_POLICY_SUBJECT;
@@ -31,5 +31,5 @@ export type PolicyHandler = IPolicyHandler | IPolicyHandlerCallback;
 
 export interface IPolicyRequest {
     type: ENUM_ROLE_TYPE;
-    permissions: UserPayloadPermissionSerialization[];
+    permissions: UserPermissionSerialization[];
 }

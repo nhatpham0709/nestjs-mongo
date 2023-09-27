@@ -1,8 +1,5 @@
 import { Prop, SchemaFactory } from '@nestjs/mongoose'
-import mongoose, {
-  CallbackWithoutResultAndOptionalError,
-  Document,
-} from 'mongoose'
+import { CallbackWithoutResultAndOptionalError, Document } from 'mongoose'
 import { DatabaseMongoUUIDEntityAbstract } from 'src/common/database/abstracts/mongo/entities/database.mongo.uuid.entity.abstract'
 import { DatabaseEntity } from 'src/common/database/decorators/database.decorator'
 import { ENUM_POLICY_SUBJECT } from 'src/common/policy/constants/policy.enum.constant'
@@ -10,7 +7,11 @@ import { IPolicyRule } from 'src/common/policy/interfaces/policy.interface'
 import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant'
 import { UserEntity } from 'src/modules/user/repository/entities/user.entity'
 
-@DatabaseEntity({ collection: 'roles' })
+@DatabaseEntity({
+  collection: 'roles',
+  toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+  toObject: { virtuals: true },
+})
 export class RoleEntity extends DatabaseMongoUUIDEntityAbstract {
   @Prop({
     required: true,
@@ -66,12 +67,6 @@ export class RoleEntity extends DatabaseMongoUUIDEntityAbstract {
     ],
   })
   permissions: IPolicyRule[]
-
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserEntity' }],
-    default: [],
-  })
-  users: UserEntity[];
 }
 
 export const RoleSchema = SchemaFactory.createForClass(RoleEntity)
@@ -82,4 +77,10 @@ RoleSchema.pre('save', function (next: CallbackWithoutResultAndOptionalError) {
   this.name = this.name.toLowerCase()
 
   next()
+})
+
+RoleSchema.virtual('users', {
+  ref: UserEntity.name,
+  localField: '_id',
+  foreignField: 'role',
 })

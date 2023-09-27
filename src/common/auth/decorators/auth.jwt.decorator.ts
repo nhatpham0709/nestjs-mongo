@@ -2,17 +2,17 @@ import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { AuthJwtAccessGuard } from 'src/common/auth/guards/jwt-access/auth.jwt-access.guard';
 import { AuthJwtRefreshGuard } from 'src/common/auth/guards/jwt-refresh/auth.jwt-refresh.guard';
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { UserPayloadSerialization } from 'src/modules/user/serializations/user.payload.serialization';
 import { IRequestApp } from 'src/common/request/interfaces/request.interface';
 import { RolePayloadTypeGuard } from 'src/modules/role/guards/payload/role.payload.type.guard';
 import { ROLE_TYPE_META_KEY } from 'src/modules/role/constants/role.constant';
 import { ENUM_ROLE_TYPE } from 'src/modules/role/constants/role.enum.constant';
+import { UserProfileSerialization } from 'src/modules/user/serializations/user.profile.serialization';
 
 export const AuthJwtPayload = createParamDecorator(
     (data: string, ctx: ExecutionContext): Record<string, any> => {
         const { user } = ctx
             .switchToHttp()
-            .getRequest<IRequestApp & { user: UserPayloadSerialization }>();
+            .getRequest<IRequestApp & { user: UserProfileSerialization }>();
         return data ? user[data] : user;
     }
 );

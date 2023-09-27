@@ -21,7 +21,7 @@ export class MessageCustomLanguageMiddleware implements NestMiddleware {
             this.messageService.getAvailableLanguages();
         let customLang: string[] = [language];
 
-        const reqLanguages: string = req.headers['x-custom-lang'] as string;
+        const reqLanguages: string = req.headers['x-lang'] as string;
         if (reqLanguages) {
             const splitLanguage: string[] = reqLanguages
                 .split(',')
@@ -40,7 +40,7 @@ export class MessageCustomLanguageMiddleware implements NestMiddleware {
 
         req.__customLang = customLang;
         req.__xCustomLang = language;
-        req.headers['x-custom-lang'] = language;
+        req.headers['x-lang'] = language;
 
         next();
     }

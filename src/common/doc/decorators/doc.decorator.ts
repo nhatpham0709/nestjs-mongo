@@ -238,7 +238,7 @@ export function Doc(options?: IDocOptions): MethodDecorator {
                 },
             },
             {
-                name: 'x-custom-lang',
+                name: 'x-lang',
                 description: 'Custom language header',
                 required: false,
                 schema: {

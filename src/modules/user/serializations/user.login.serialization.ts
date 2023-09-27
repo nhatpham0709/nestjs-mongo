@@ -15,7 +15,7 @@ export class UserLoginSerialization {
         required: true,
         nullable: false,
     })
-    readonly expiresIn: string;
+    readonly expiresAt: string;
 
     @ApiProperty({
         example: faker.string.alphanumeric(30),

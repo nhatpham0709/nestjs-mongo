@@ -10,7 +10,7 @@ import { UserUserDeleteSelfDoc } from 'src/modules/user/docs/user.user.doc';
 import { UserDoc } from 'src/modules/user/repository/entities/user.entity';
 import { UserService } from 'src/modules/user/services/user.service';
 
-@ApiTags('modules.user.user')
+@ApiTags('User/User')
 @Controller({
     version: '1',
     path: '/user',

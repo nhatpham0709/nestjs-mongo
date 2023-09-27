@@ -31,10 +31,10 @@ import { SettingGetSerialization } from 'src/common/setting/serializations/setti
 import { SettingListSerialization } from 'src/common/setting/serializations/setting.list.serialization';
 import { SettingService } from 'src/common/setting/services/setting.service';
 
-@ApiTags('common.public.setting')
+@ApiTags('Admin/Settings')
 @Controller({
     version: '1',
-    path: '/setting',
+    path: '/    ',
 })
 export class SettingPublicController {
     constructor(

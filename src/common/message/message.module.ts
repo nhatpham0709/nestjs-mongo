@@ -21,13 +21,13 @@ import { MessageMiddlewareModule } from 'src/common/message/middleware/message.m
                     {}
                 ),
                 loaderOptions: {
-                    path: path.join(__dirname, '../../languages'),
+                    path: path.join(__dirname, '../../i18n/'),
                     watch: true,
                 },
             }),
             loader: I18nJsonLoader,
             inject: [ConfigService],
-            resolvers: [new HeaderResolver(['x-custom-lang'])],
+            resolvers: [new HeaderResolver(['x-lang'])],
         }),
         MessageMiddlewareModule,
     ],

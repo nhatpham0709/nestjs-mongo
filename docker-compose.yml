@@ -1,21 +1,21 @@
 version: '3.8'
 services:
-  service:
-    build: .
-    container_name: service
-    hostname: service
-    ports:
-      - 3000:3000
-    networks:
-      - app-network
-    volumes:
-      - ./src/:/app/src/
-      - .env/:/app/.env
-    restart: unless-stopped
-    depends_on: 
-      - mongo1
-      - mongo2
-      - mongo3
+  # service:
+  #   build: .
+  #   container_name: service
+  #   hostname: service
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - app-network
+  #   volumes:
+  #     - ./src/:/app/src/
+  #     - .env/:/app/.env
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - mongo1
+  #     - mongo2
+  #     - mongo3
   mongo1:
     container_name: mongo1
     hostname: mongo1
@@ -23,6 +23,8 @@ services:
     restart: always
     networks:
       - app-network
+    ports:
+      - 27017:27017
     volumes:
       - dbdata1:/data/db
     command: mongod --bind_ip_all --replSet rs0
@@ -48,11 +50,29 @@ services:
     volumes:
       - dbdata3:/data/db
     command: mongod --bind_ip_all --replSet rs0
+
+  maildev:
+    container_name: maildev
+    build:
+      context: .
+      dockerfile: maildev.Dockerfile
+    ports:
+      - ${MAIL_CLIENT_PORT}:1080
+      - ${MAIL_PORT}:1025
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - ${REDIS_PORT-6379}:6379
 networks:
   app-network:
     name: app-network
     driver: bridge
 volumes:
   dbdata1:
+    driver: local
   dbdata2:
+    driver: local
   dbdata3:
+    driver: local

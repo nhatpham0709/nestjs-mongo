@@ -5,7 +5,7 @@
     "plugins": ["@nestjs/swagger"],
     "assets": [
       { 
-        "include": "languages/**/*", 
+        "include": "i18n/**/*", 
         "outDir": "dist/src" 
       }
     ],

@@ -1,91 +1,87 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DashboardService } from 'src/common/dashboard/services/dashboard.service';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
-import { HelperNumberService } from 'src/common/helper/services/helper.number.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { DashboardService } from 'src/common/dashboard/services/dashboard.service'
+import { HelperDateService } from 'src/common/helper/services/helper.date.service'
+import { HelperNumberService } from 'src/common/helper/services/helper.number.service'
 
 describe('DashboardService', () => {
-    let service: DashboardService;
+  let service: DashboardService
 
-    beforeEach(async () => {
-        const moduleRef: TestingModule = await Test.createTestingModule({
-            providers: [
-                DashboardService,
-                HelperNumberService,
-                HelperDateService,
-            ],
-            imports: [],
-        }).compile();
+  beforeEach(async () => {
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      providers: [DashboardService, HelperNumberService, HelperDateService],
+      imports: [],
+    }).compile()
 
-        service = moduleRef.get<DashboardService>(DashboardService);
-    });
+    service = moduleRef.get<DashboardService>(DashboardService)
+  })
 
-    it('should be defined', () => {
-        expect(service).toBeDefined();
-    });
+  it('should be defined', () => {
+    expect(service).toBeDefined()
+  })
 
-    describe('getStartAndEndDate', () => {
-        it('should return current year start and end dates if no start and end dates are provided', async () => {
-            const startDate = new Date(new Date().setMonth(0, 1));
-            const endDate = new Date(new Date().setMonth(11, 31));
-            const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0));
-            const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999));
+  describe('getStartAndEndDate', () => {
+    it('should return current year start and end dates if no start and end dates are provided', async () => {
+      const startDate = new Date(new Date().setMonth(0, 1))
+      const endDate = new Date(new Date().setMonth(11, 31))
+      const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0))
+      const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999))
 
-            const result = service.getStartAndEndDate({});
+      const result = service.getStartAndEndDate({})
 
-            expect(result.startDate).toEqual(expectedStartDate);
-            expect(result.endDate).toEqual(expectedEndDate);
-        });
+      expect(result.startDate).toEqual(expectedStartDate)
+      expect(result.endDate).toEqual(expectedEndDate)
+    })
 
-        it('should return start and end dates as provided', async () => {
-            const startDate = new Date(2022, 5, 15);
-            const endDate = new Date(2022, 5, 20);
-            const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0));
-            const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999));
+    it('should return start and end dates as provided', async () => {
+      const startDate = new Date(2022, 5, 15)
+      const endDate = new Date(2022, 5, 20)
+      const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0))
+      const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999))
 
-            const result = service.getStartAndEndDate({
-                startDate,
-                endDate,
-            });
+      const result = service.getStartAndEndDate({
+        startDate,
+        endDate,
+      })
 
-            expect(result.startDate).toEqual(expectedStartDate);
-            expect(result.endDate).toEqual(expectedEndDate);
-        });
+      expect(result.startDate).toEqual(expectedStartDate)
+      expect(result.endDate).toEqual(expectedEndDate)
+    })
 
-        it('should return start date as current day of year if not provided', async () => {
-            const today = new Date();
-            const endDate = new Date(2022, 5, 15);
-            const startDate = new Date(today.getFullYear(), 0, 1);
-            const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0));
-            const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999));
+    it('should return start date as current day of year if not provided', async () => {
+      const today = new Date()
+      const endDate = new Date(2022, 5, 15)
+      const startDate = new Date(today.getFullYear(), 0, 1)
+      const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0))
+      const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999))
 
-            const result = service.getStartAndEndDate({ endDate });
+      const result = service.getStartAndEndDate({ endDate })
 
-            expect(result.startDate).toEqual(expectedStartDate);
-            expect(result.endDate).toEqual(expectedEndDate);
-        });
+      expect(result.startDate).toEqual(expectedStartDate)
+      expect(result.endDate).toEqual(expectedEndDate)
+    })
 
-        it('should return end date as current day of year if not provided', async () => {
-            const today = new Date();
-            const startDate = new Date(2022, 5, 15);
-            const endDate = new Date(today.getFullYear(), 11, 31);
-            const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0));
-            const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999));
+    it('should return end date as current day of year if not provided', async () => {
+      const today = new Date()
+      const startDate = new Date(2022, 5, 15)
+      const endDate = new Date(today.getFullYear(), 11, 31)
+      const expectedStartDate = new Date(startDate.setHours(0, 0, 0, 0))
+      const expectedEndDate = new Date(endDate.setHours(23, 59, 59, 999))
 
-            const result = service.getStartAndEndDate({ startDate });
+      const result = service.getStartAndEndDate({ startDate })
 
-            expect(result.startDate).toEqual(expectedStartDate);
-            expect(result.endDate).toEqual(expectedEndDate);
-        });
-    });
+      expect(result.startDate).toEqual(expectedStartDate)
+      expect(result.endDate).toEqual(expectedEndDate)
+    })
+  })
 
-    describe('getPercentage', () => {
-        it('should return the percentage of the value in total', async () => {
-            const value = 2;
-            const total = 10;
-            const expectedPercentage = 20;
-            const result = service.getPercentage(value, total);
+  describe('getPercentage', () => {
+    it('should return the percentage of the value in total', async () => {
+      const value = 2
+      const total = 10
+      const expectedPercentage = 20
+      const result = service.getPercentage(value, total)
 
-            expect(result).toEqual(expectedPercentage);
-        });
-    });
-});
+      expect(result).toEqual(expectedPercentage)
+    })
+  })
+})

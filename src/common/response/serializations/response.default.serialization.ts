@@ -37,7 +37,7 @@ export class ResponseDefaultSerialization<T = Record<string, any>> {
                 type: 'object',
                 example: {
                     en: 'This is test endpoint.',
-                    id: 'Ini adalah endpoint test',
+                    vi: 'Đây là endpoint test.',
                 },
             },
         ],
@@ -51,9 +51,9 @@ export class ResponseDefaultSerialization<T = Record<string, any>> {
         description: 'Contain metadata about API',
         type: 'object',
         example: {
-            languages: ['en'],
+            languages: ['vi'],
             timestamp: 1660190937231,
-            timezone: 'Asia/Jakarta',
+            timezone: 'Asia/Ho_Chi_Minh',
             requestId: '40c2f734-7247-472b-bc26-8eff6e669781',
             path: '/api/v1/test/hello',
             version: '1',

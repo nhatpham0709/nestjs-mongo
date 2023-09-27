@@ -27,7 +27,7 @@ export class SettingService implements ISettingService {
 
     constructor(
         private readonly settingRepository: SettingRepository,
-        private readonly configService: ConfigService,
+    private readonly configService: ConfigService,
         private readonly helperNumberService: HelperNumberService
     ) {
         this.mobileNumberCountryCodeAllowed = this.configService.get<string[]>(

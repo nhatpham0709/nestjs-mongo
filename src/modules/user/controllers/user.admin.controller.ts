@@ -96,7 +96,7 @@ import {
 } from 'src/modules/user/docs/user.admin.doc';
 import { ENUM_USER_SIGN_UP_FROM } from 'src/modules/user/constants/user.enum.constant';
 
-@ApiTags('modules.admin.user')
+@ApiTags('Admin/Users')
 @Controller({
     version: '1',
     path: '/user',
@@ -110,7 +110,7 @@ export class UserAdminController {
     ) {}
 
     @UserAdminListDoc()
-    @ResponsePaging('user.list', {
+    @ResponsePaging('Users List', {
         serialization: UserListSerialization,
     })
     @PolicyAbilityProtected({
@@ -155,6 +155,7 @@ export class UserAdminController {
             },
             order: _order,
         });
+        
         const total: number = await this.userService.getTotal(find);
         const totalPage: number = this.paginationService.totalPage(
             total,

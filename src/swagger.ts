@@ -28,7 +28,6 @@ export default async function (app: NestApplication) {
             .setTitle(docName)
             .setDescription(docDesc)
             .setVersion(docVersion)
-            .addTag("API's")
             .addServer('/')
             .addServer('/staging')
             .addServer('/prod')

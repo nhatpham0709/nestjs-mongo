@@ -74,7 +74,7 @@ import { RoleService } from 'src/modules/role/services/role.service';
 import { UserDoc } from 'src/modules/user/repository/entities/user.entity';
 import { UserService } from 'src/modules/user/services/user.service';
 
-@ApiTags('modules.admin.role')
+@ApiTags('Admin/Roles')
 @Controller({
     version: '1',
     path: '/role',
@@ -123,6 +123,7 @@ export class RoleAdminController {
             },
             order: _order,
         });
+
 
         const total: number = await this.roleService.getTotal(find);
         const totalPage: number = this.paginationService.totalPage(

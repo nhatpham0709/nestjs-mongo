@@ -78,7 +78,7 @@ import {
 } from 'src/common/response/interfaces/response.interface';
 import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
 
-@ApiTags('common.admin.apiKey')
+@ApiTags('Admin/ApiKeys')
 @Controller({
     version: '1',
     path: '/api-key',

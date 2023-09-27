@@ -52,7 +52,7 @@ export interface IUserService {
     ): Promise<number>;
     create(
         { firstName, lastName, email, mobileNumber, role }: UserCreateDto,
-        { passwordExpired, passwordHash, salt, passwordCreated }: IAuthPassword,
+        { passwordExpired, passwordHash, passwordCreated }: IAuthPassword,
         options?: IDatabaseCreateOptions
     ): Promise<UserDoc>;
     existByEmail(
@@ -88,7 +88,7 @@ export interface IUserService {
     ): Promise<UserDoc>;
     updatePassword(
         repository: UserDoc,
-        { passwordHash, passwordExpired, salt, passwordCreated }: IAuthPassword,
+        { passwordHash, passwordExpired, passwordCreated }: IAuthPassword,
         options?: IDatabaseSaveOptions
     ): Promise<UserDoc>;
     active(
@@ -138,7 +138,7 @@ export interface IUserService {
     import(
         data: UserImportDto[],
         role: string,
-        { passwordCreated, passwordHash, salt }: IAuthPassword,
+        { passwordCreated, passwordHash }: IAuthPassword,
         options?: IDatabaseCreateManyOptions
     ): Promise<boolean>;
 }

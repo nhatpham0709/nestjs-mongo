@@ -28,8 +28,6 @@ import {
 import { MessageService } from 'src/common/message/services/message.service';
 import { IRequestApp } from 'src/common/request/interfaces/request.interface';
 
-// If we throw error with HttpException, there will always return object
-// The exception filter only catch HttpException
 @Catch()
 export class ErrorHttpFilter implements ExceptionFilter {
     constructor(
@@ -66,7 +64,6 @@ export class ErrorHttpFilter implements ExceptionFilter {
             request.__repoVersion ??
             this.configService.get<string>('app.repoVersion');
 
-        // Debugger
         try {
             this.debuggerService.error(
                 request?.__id ? request.__id : ErrorHttpFilter.name,
@@ -162,7 +159,7 @@ export class ErrorHttpFilter implements ExceptionFilter {
         };
 
         response
-            .setHeader('x-custom-lang', __customLang)
+            .setHeader('x-lang', __customLang)
             .setHeader('x-timestamp', __timestamp)
             .setHeader('x-timezone', __timezone)
             .setHeader('x-request-id', __requestId)

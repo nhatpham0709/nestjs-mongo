@@ -122,10 +122,7 @@ export class RoleAdminController {
         offset: _offset,
       },
       order: _order,
-    })
-
-    console.log(roles);
-    
+    })    
 
     const total= await this.roleService.getTotal(find)
     const totalPage = this.paginationService.totalPage(total, _limit)
